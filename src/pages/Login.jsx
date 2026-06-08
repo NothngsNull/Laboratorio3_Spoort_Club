@@ -1,34 +1,41 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
 import { useNavigate, Link } from 'react-router-dom';
-import { loginUser } from '../services/authService';
+import { loginUser, saveSession } from '../services/authService';
 
 function Login() {
   const navigate = useNavigate();
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
+    setLoading(true);
     
     const email = e.target.loginEmail.value.toLowerCase();
     const password = e.target.loginPassword.value;
 
     try {
-      // Validar contra nuestra base de datos simulada
-      const loggedUser = loginUser(email, password);
+      // 1. Petición a la API Real
+      const data = await loginUser({ email, password });
 
-      // Si todo es correcto, guardamos la sesión y el token
-      localStorage.setItem('user', JSON.stringify(loggedUser));
-      localStorage.setItem('token', loggedUser.token);
+      // 2. Extraer token y usuario (dependiendo de la estructura exacta de tu API)
+      const token = data.token;
+      const user = data.user;
 
-      // Redirigir según el rol
-      if (loggedUser.role === 'admin') navigate('/admin/dashboard');
-      else if (loggedUser.role === 'coach') navigate('/coach/dashboard');
+      // 3. Guardar sesión real
+      saveSession(token, user);
+
+      // 4. Redirigir según el rol que venga de la base de datos
+      if (user.role === 'admin') navigate('/admin/dashboard');
+      else if (user.role === 'coach') navigate('/coach/dashboard');
       else navigate('/user/dashboard');
       
     } catch (err) {
-      setError(err.message); // Mostrará "Credenciales incorrectas"
+      setError(err.message || 'No se pudo conectar con el servidor.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -51,7 +58,7 @@ function Login() {
                 <Form onSubmit={handleLogin}>
                   <Form.Group className="mb-4" controlId="loginEmail">
                     <Form.Label className="fw-bold text-secondary">Correo electrónico</Form.Label>
-                    <Form.Control type="email" placeholder="usuario@empresa.cl" required className="py-2 bg-light border-0" />
+                    <Form.Control type="email" placeholder="usuario@correo.com" required className="py-2 bg-light border-0" />
                   </Form.Group>
 
                   <Form.Group className="mb-4" controlId="loginPassword">
@@ -60,8 +67,8 @@ function Login() {
                   </Form.Group>
 
                   <div className="d-grid mt-4">
-                    <Button type="submit" size="lg" className="btn-corporate-solid py-2">
-                      Ingresar
+                    <Button type="submit" size="lg" className="btn-corporate-solid py-2" disabled={loading}>
+                      {loading ? 'Conectando...' : 'Ingresar'}
                     </Button>
                   </div>
                 </Form>

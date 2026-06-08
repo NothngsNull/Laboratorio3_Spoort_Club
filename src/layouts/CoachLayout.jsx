@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { Navbar, Container, Nav, Button } from 'react-bootstrap';
+import { logout, getUser } from '../services/authService';
 
 function CoachLayout() {
   const navigate = useNavigate();
   const handleLogout = () => {
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
-    navigate('/');
+    logout();
+    navigate('/login');
   };
 
   return (

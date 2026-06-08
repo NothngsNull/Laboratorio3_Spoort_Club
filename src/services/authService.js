@@ -1,58 +1,75 @@
+const API_URL = "http://localhost:3000/api/auth";
 
+// --- LOGIN REAL ---
+export async function loginUser(credentials) {
+  const response = await fetch(`${API_URL}/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(credentials),
+  });
 
-const BASE_USERS = [
-    { name: 'Usuario Demo', email: 'usuario1@empresa.cl', password: btoa('12345678'), role: 'user', token: 'token-user-123' },
-    { name: 'Coach Demo', email: 'coach1@empresa.cl', password: btoa('12345678'), role: 'coach', token: 'token-coach-123' },
-    { name: 'Admin Demo', email: 'admin1@empresa.cl', password: btoa('12345678'), role: 'admin', token: 'token-admin-123' }
-  ];
-  
-  // Inicializa los usuarios base si la base de datos (localStorage) está vacía
-  export const initAuth = () => {
-    if (!localStorage.getItem('users_db')) {
-      localStorage.setItem('users_db', JSON.stringify(BASE_USERS));
-    }
+  const data = await response.json();
+
+  if (!response.ok && response.status !== 400 && response.status !== 401) {
+    throw new Error(`Error del servidor: ${response.status}`);
+  }
+
+  if (!response.ok || !data.ok && !data.token) {
+    throw new Error(data.message || "Correo o contraseña incorrectos.");
+  }
+
+  // Retornamos la respuesta (la API antigua devolvía la info dentro de data.data)
+  return data.data ? data.data : data; 
+}
+
+// --- REGISTRO REAL ---
+export async function registerUser(name, email, password) {
+  // Tu API antigua esperaba full_name
+  const body = {
+    full_name: name,
+    email: email,
+    password: password
   };
-  
-  // Validar inicio de sesión
-  export const loginUser = (email, password) => {
-    const users = JSON.parse(localStorage.getItem('users_db')) || [];
-    
-    // Buscamos si existe el email y si la contraseña (codificada) coincide
-    const user = users.find(u => u.email === email && u.password === btoa(password));
-    
-    if (!user) {
-      throw new Error('Credenciales incorrectas o el usuario no existe.');
-    }
-    
-    return user;
-  };
-  
-  // Registrar un nuevo usuario (Siempre con rol 'user')
-  export const registerUser = (name, email, password) => {
-    const users = JSON.parse(localStorage.getItem('users_db')) || [];
-    
-    // Verificar si el correo ya existe
-    if (users.find(u => u.email === email)) {
-      throw new Error('Este correo ya está registrado en SportClub.');
-    }
-  
-    // Validación de seguridad de la contraseña (Mínimo 8 caracteres, 1 mayúscula, 1 número)
-    const secureRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-    if (!secureRegex.test(password)) {
-      throw new Error('La contraseña debe tener al menos 8 caracteres, incluir una mayúscula y un número.');
-    }
-  
-    // Crear y guardar el nuevo usuario
-    const newUser = {
-      name,
-      email,
-      password: btoa(password), // Codificamos la contraseña por seguridad
-      role: 'user', // Forzamos el rol 'user'
-      token: `token-${Date.now()}` // Generamos un token único simulado
-    };
-  
-    users.push(newUser);
-    localStorage.setItem('users_db', JSON.stringify(users));
-    
-    return newUser;
-  };
+
+  const response = await fetch(`${API_URL}/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok && response.status !== 201) {
+    throw new Error(data.message || "Error al registrar usuario.");
+  }
+
+  return data;
+}
+
+// --- MANEJO DE SESIÓN EN NAVEGADOR ---
+export function saveSession(token, user) {
+  localStorage.setItem("token", token);
+  localStorage.setItem("user", JSON.stringify(user));
+}
+
+export function getToken() {
+  return localStorage.getItem("token");
+}
+
+export function getUser() {
+  const user = localStorage.getItem("user");
+  return user ? JSON.parse(user) : null;
+}
+
+export function isAuthenticated() {
+  return Boolean(getToken());
+}
+
+export function logout() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+}

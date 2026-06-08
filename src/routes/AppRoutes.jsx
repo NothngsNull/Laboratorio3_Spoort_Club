@@ -1,50 +1,46 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ProtectedRoute from "../components/ProtectedRoute.jsx";
-import Register from "../pages/Register.jsx";
 
-// Importaciones de páginas
+// Páginas
 import Home from "../pages/Home.jsx";
 import Login from "../pages/Login.jsx";
+import Register from "../pages/Register.jsx";
+import Unauthorized from "../pages/Unauthorized.jsx";
 import UserDashboard from "../pages/user/UserDashboard.jsx";
 import CoachDashboard from "../pages/coach/CoachDashboard.jsx";
 import AdminDashboard from "../pages/admin/AdminDashboard.jsx";
 
-// Importaciones de Layouts
+// Layouts
 import UserLayout from "../layouts/UserLayout.jsx";
 import CoachLayout from "../layouts/CoachLayout.jsx";
 import AdminLayout from "../layouts/AdminLayout.jsx";
+
+// Guardias
+import ProtectedRoute from "../components/ProtectedRoute.jsx";
+import RoleRoute from "../components/RoleRoute.jsx";
 
 function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Rutas Públicas */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        
+        <Route path="/unauthorized" element={<Unauthorized />} />
 
-        {/* Panel de Clientes/Usuarios (Solo rol: user) */}
-        <Route element={<ProtectedRoute allowedRoles={['user']} />}>
-          <Route path="/user" element={<UserLayout />}>
-            <Route path="dashboard" element={<UserDashboard />} />
-          </Route>
+        <Route path="/user" element={<RoleRoute allowedRoles={["user"]}><UserLayout /></RoleRoute>}>
+          <Route path="dashboard" element={<UserDashboard />} />
         </Route>
 
-        {/* Panel de Entrenadores/Coaches (Solo rol: coach) */}
-        <Route element={<ProtectedRoute allowedRoles={['coach']} />}>
-          <Route path="/coach" element={<CoachLayout />}>
-            <Route path="dashboard" element={<CoachDashboard />} />
-          </Route>
+        <Route path="/coach" element={<RoleRoute allowedRoles={["coach"]}><CoachLayout /></RoleRoute>}>
+          <Route path="dashboard" element={<CoachDashboard />} />
         </Route>
 
-        {/* Panel de Administradores (Solo rol: admin) */}
-        <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route path="dashboard" element={<AdminDashboard />} />
-          </Route>
+        <Route path="/admin" element={<RoleRoute allowedRoles={["admin"]}><AdminLayout /></RoleRoute>}>
+          <Route path="dashboard" element={<AdminDashboard />} />
         </Route>
+
+        <Route path="/perfil" element={<ProtectedRoute><h1>Perfil del usuario autenticado</h1></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   );
