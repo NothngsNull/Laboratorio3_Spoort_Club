@@ -1,13 +1,43 @@
-import React from 'react';
-import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
 import { useNavigate, Link } from 'react-router-dom';
 
 function Login() {
   const navigate = useNavigate();
+  const [error, setError] = useState('');
 
   const handleLogin = (e) => {
     e.preventDefault();
-    navigate('/user/dashboard');
+    setError('');
+    
+    const email = e.target.loginEmail.value.toLowerCase();
+    const password = e.target.loginPassword.value;
+
+    if (password.length < 6) {
+      setError('La contraseña debe tener al menos 6 caracteres.');
+      return;
+    }
+
+    // MOCK DE LOGIN: Asignamos rol mágicamente según lo que escribas en el correo
+    let role = 'user';
+    if (email.includes('admin')) role = 'admin';
+    else if (email.includes('coach')) role = 'coach';
+
+    const mockUser = {
+      name: "Usuario Demo",
+      email: email,
+      role: role,
+      token: "fake-jwt-token-123"
+    };
+
+    // Guardar sesión activa en el navegador
+    localStorage.setItem('user', JSON.stringify(mockUser));
+    localStorage.setItem('token', mockUser.token);
+
+    // Redirigir al dashboard correspondiente
+    if (role === 'admin') navigate('/admin/dashboard');
+    else if (role === 'coach') navigate('/coach/dashboard');
+    else navigate('/user/dashboard');
   };
 
   return (
@@ -21,12 +51,15 @@ function Login() {
                   Sport<span className="text-corporate-accent">Club</span>
                 </h2>
               </Card.Header>
-              <Card.Body className="p-5 bg-white">
+              <Card.Body className="p-4 bg-white">
                 <h4 className="text-center mb-4 fw-bold text-dark">Iniciar Sesión</h4>
+                
+                {error && <Alert variant="danger" className="fw-bold text-center">{error}</Alert>}
+
                 <Form onSubmit={handleLogin}>
                   <Form.Group className="mb-4" controlId="loginEmail">
                     <Form.Label className="fw-bold text-secondary">Correo electrónico</Form.Label>
-                    <Form.Control type="email" placeholder="usuario@ejemplo.com" required className="py-2 bg-light border-0" />
+                    <Form.Control type="email" placeholder="Escribe 'admin', 'coach' o 'user'..." required className="py-2 bg-light border-0" />
                   </Form.Group>
 
                   <Form.Group className="mb-4" controlId="loginPassword">
