@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "../components/ProtectedRoute.jsx";
+import Register from "../pages/Register.jsx";
 
 // Importaciones de páginas
 import Home from "../pages/Home.jsx";
@@ -21,6 +22,8 @@ function AppRoutes() {
         {/* Rutas Públicas */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        
 
         {/* Panel de Clientes/Usuarios (Solo rol: user) */}
         <Route element={<ProtectedRoute allowedRoles={['user']} />}>

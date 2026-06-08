@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
 import { useNavigate, Link } from 'react-router-dom';
+import { loginUser } from '../services/authService';
 
 function Login() {
   const navigate = useNavigate();
@@ -13,31 +14,22 @@ function Login() {
     const email = e.target.loginEmail.value.toLowerCase();
     const password = e.target.loginPassword.value;
 
-    if (password.length < 6) {
-      setError('La contraseña debe tener al menos 6 caracteres.');
-      return;
+    try {
+      // Validar contra nuestra base de datos simulada
+      const loggedUser = loginUser(email, password);
+
+      // Si todo es correcto, guardamos la sesión y el token
+      localStorage.setItem('user', JSON.stringify(loggedUser));
+      localStorage.setItem('token', loggedUser.token);
+
+      // Redirigir según el rol
+      if (loggedUser.role === 'admin') navigate('/admin/dashboard');
+      else if (loggedUser.role === 'coach') navigate('/coach/dashboard');
+      else navigate('/user/dashboard');
+      
+    } catch (err) {
+      setError(err.message); // Mostrará "Credenciales incorrectas"
     }
-
-    // MOCK DE LOGIN: Asignamos rol mágicamente según lo que escribas en el correo
-    let role = 'user';
-    if (email.includes('admin')) role = 'admin';
-    else if (email.includes('coach')) role = 'coach';
-
-    const mockUser = {
-      name: "Usuario Demo",
-      email: email,
-      role: role,
-      token: "fake-jwt-token-123"
-    };
-
-    // Guardar sesión activa en el navegador
-    localStorage.setItem('user', JSON.stringify(mockUser));
-    localStorage.setItem('token', mockUser.token);
-
-    // Redirigir al dashboard correspondiente
-    if (role === 'admin') navigate('/admin/dashboard');
-    else if (role === 'coach') navigate('/coach/dashboard');
-    else navigate('/user/dashboard');
   };
 
   return (
@@ -59,7 +51,7 @@ function Login() {
                 <Form onSubmit={handleLogin}>
                   <Form.Group className="mb-4" controlId="loginEmail">
                     <Form.Label className="fw-bold text-secondary">Correo electrónico</Form.Label>
-                    <Form.Control type="email" placeholder="Escribe 'admin', 'coach' o 'user'..." required className="py-2 bg-light border-0" />
+                    <Form.Control type="email" placeholder="usuario@empresa.cl" required className="py-2 bg-light border-0" />
                   </Form.Group>
 
                   <Form.Group className="mb-4" controlId="loginPassword">
@@ -74,8 +66,11 @@ function Login() {
                   </div>
                 </Form>
               </Card.Body>
-              <Card.Footer className="text-center py-3 bg-light border-0">
-                <Link to="/" className="text-decoration-none small text-muted fw-bold">
+              <Card.Footer className="text-center py-3 bg-light border-0 d-flex flex-column gap-2">
+                <Link to="/register" className="text-decoration-none small fw-bold text-corporate">
+                  ¿No tienes cuenta? Regístrate aquí
+                </Link>
+                <Link to="/" className="text-decoration-none small text-muted">
                   &larr; Volver al Inicio
                 </Link>
               </Card.Footer>
