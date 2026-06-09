@@ -18,7 +18,8 @@ function Home() {
               <Button as={Link} to="/login" className="btn-corporate-outline px-4">
                 Iniciar Sesión
               </Button>
-              <Button as={Link} to="/login" className="btn-corporate-solid px-4">
+              {/* Aquí está el botón ya corregido apuntando a /register */}
+              <Button as={Link} to="/register" className="btn-corporate-solid px-4">
                 Registrarse
               </Button>
             </Nav>

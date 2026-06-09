@@ -1,12 +1,10 @@
 const API_URL = "http://localhost:3000/api/auth";
 
-// --- LOGIN REAL ---
+// --- LOGIN ---
 export async function loginUser(credentials) {
   const response = await fetch(`${API_URL}/login`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(credentials),
   });
 
@@ -15,29 +13,28 @@ export async function loginUser(credentials) {
   if (!response.ok && response.status !== 400 && response.status !== 401) {
     throw new Error(`Error del servidor: ${response.status}`);
   }
-
-  if (!response.ok || !data.ok && !data.token) {
+  if (!response.ok || (!data.ok && !data.token)) {
     throw new Error(data.message || "Correo o contraseña incorrectos.");
   }
 
-  // Retornamos la respuesta (la API antigua devolvía la info dentro de data.data)
-  return data.data ? data.data : data; 
+  // La API puede devolver la info dentro de data.data o directamente en data
+  return data.data ? data.data : data;
 }
 
-// --- REGISTRO REAL ---
-export async function registerUser(name, email, password) {
-  // Tu API antigua esperaba full_name
+// --- REGISTRO ---
+// Acepta opciones extra (birth_date, metadata) para enviarlos a la API
+export async function registerUser(name, email, password, opciones = {}) {
   const body = {
-    full_name: name,
-    email: email,
-    password: password
+    full_name:  name,
+    email:      email,
+    password:   password,
+    birth_date: opciones.birth_date  || null,
+    metadata:   opciones.metadata    || {}
   };
 
   const response = await fetch(`${API_URL}/register`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
   });
 
@@ -50,7 +47,7 @@ export async function registerUser(name, email, password) {
   return data;
 }
 
-// --- MANEJO DE SESIÓN EN NAVEGADOR ---
+// --- SESIÓN ---
 export function saveSession(token, user) {
   localStorage.setItem("token", token);
   localStorage.setItem("user", JSON.stringify(user));
