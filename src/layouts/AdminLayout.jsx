@@ -1,12 +1,3 @@
-// src/layouts/AdminLayout.jsx
-// ─────────────────────────────────────────────────────────────────────────────
-// CAMBIOS según el Anexo Evaluación N°3:
-//   + Link "Mi Perfil" obligatorio en el header
-//   + Color principal diferenciado: MORADO (#2E1A47 / #4a2d6e)
-//   + Badge "Admin" en el header
-//   + Link activo resaltado con #F2B705
-// ─────────────────────────────────────────────────────────────────────────────
-
 import React from "react";
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { Navbar, Container, Nav, Button, NavDropdown } from "react-bootstrap";

@@ -8,7 +8,7 @@ Sistema de gestión deportiva construido con React + Vite, React Router, Bootstr
 
 | Nombre | Rol |
 |--------|-----|
-| *(Tu nombre aquí)* | Desarrollador Frontend |
+| *(Ignacio Figueroa)* | Estudiante inacap |
 
 ---
 

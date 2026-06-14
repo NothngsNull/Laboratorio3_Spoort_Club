@@ -1,18 +1,3 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// src/pages/admin/UsersPage.jsx
-//
-// Página de administración de usuarios.
-// Responsabilidades:
-//   1. Cargar y mostrar usuarios desde el backend (GET /api/users)
-//   2. Abrir modal para crear o editar (POST / PUT)
-//   3. Eliminar con confirmación SweetAlert2 (DELETE)
-//   4. Actualizar la tabla en memoria sin recargar el navegador
-//
-// Nota sobre IDs:
-//   El backend puede devolver el id como "id" (SQL) o "_id" (Mongo).
-//   Usamos el helper getUserId(user) para normalizar ambos casos.
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { useEffect, useState } from "react";
 import { Badge, Button, Card, Spinner, Table } from "react-bootstrap";
 import Swal from "sweetalert2";

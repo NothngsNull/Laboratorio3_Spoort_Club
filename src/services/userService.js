@@ -1,10 +1,3 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// src/services/userService.js
-//
-// Servicio de comunicación con el backend para el módulo Usuarios.
-// Todos los endpoints apuntan a http://localhost:3000/api/users
-// El token JWT se lee desde localStorage (guardado por authService.js)
-// ─────────────────────────────────────────────────────────────────────────────
 
 const API_URL = "http://localhost:3000/api/users";
 

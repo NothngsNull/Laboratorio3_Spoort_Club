@@ -1,18 +1,3 @@
-// src/pages/Login.jsx
-// ─────────────────────────────────────────────────────────────────────────────
-// CAMBIOS respecto a la versión anterior:
-//
-//  1. Si el usuario ya tiene sesión activa y entra a /login,
-//     es redirigido automáticamente a su dashboard (no se le muestra el form).
-//
-//  2. Uso correcto del authService actualizado:
-//     - loginUser() ahora devuelve siempre { token, user }
-//     - saveSession(data.token, data.user)  ← nunca falla
-//     - getRedirectPath()  ← centralizado en authService
-//
-//  3. Todo lo demás (validaciones, estilos, textos) permanece idéntico.
-// ─────────────────────────────────────────────────────────────────────────────
-
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 import { useNavigate, Link, Navigate } from 'react-router-dom';

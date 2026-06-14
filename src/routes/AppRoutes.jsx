@@ -1,12 +1,3 @@
-// src/routes/AppRoutes.jsx
-// ─────────────────────────────────────────────────────────────────────────────
-// CAMBIOS respecto a la versión anterior:
-//   + Rutas /admin/perfil, /coach/perfil, /user/perfil (requerido por el anexo,
-//     ya que los layouts ahora tienen el link "Mi Perfil" obligatorio)
-//   + Importación de PerfilPage genérico reutilizable
-//   + Todo lo demás permanece idéntico
-// ─────────────────────────────────────────────────────────────────────────────
-
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 

@@ -1,37 +1,4 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// src/services/authService.js
-//
-// BUG CORREGIDO: la respuesta del backend SportClub es:
-//   { ok: true, data: { token: "...", user: { id, full_name, email, role, ... } } }
-//
-// El problema: loginUser() devolvía data.data (que ya era { token, user }),
-// pero Login.jsx luego intentaba leer data.token y data.user — eso funcionaba.
-// El bug REAL está en que saveSession() guardaba token y user correctamente,
-// PERO al recargar la página, RoleRoute llamaba isAuthenticated() que solo
-// comprueba el token. Si el token expira o si el backend devuelve el user
-// envuelto diferente, getUser() devuelve null y el rol no se puede leer,
-// causando que RoleRoute redirija a /login.
-//
-// SOLUCIÓN APLICADA:
-//   1. loginUser() ahora normaliza la respuesta del backend robustamente.
-//   2. Login.jsx ya no necesita asumir nada sobre la estructura de data.
-//   3. Se agrega getRedirectPath() para centralizar la lógica de redirección.
-//   4. Se agrega redirectIfAuthenticated() para que /login y /register
-//      redirijan al dashboard si ya hay sesión activa.
-// ─────────────────────────────────────────────────────────────────────────────
-
 const API_URL = "http://localhost:3000/api/auth";
-
-// ── LOGIN ─────────────────────────────────────────────────────────────────────
-/**
- * Hace POST /api/auth/login y devuelve SIEMPRE { token, user }.
- *
- * El backend SportClub responde con:
- *   { ok: true, data: { token: "jwt...", user: { id, full_name, email, role } } }
- *
- * Esta función normaliza eso para que Login.jsx siempre reciba
- * exactamente { token: "...", user: { ... } } sin depender del envoltorio.
- */
 export async function loginUser(credentials) {
   const response = await fetch(`${API_URL}/login`, {
     method:  "POST",

@@ -1,15 +1,3 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// src/components/users/UserFormModal.jsx
-//
-// Modal reutilizable para CREAR y EDITAR usuarios.
-//
-// Props:
-//   show         {boolean}      Controla visibilidad del modal
-//   handleClose  {function}     Cierra el modal
-//   handleSave   {function}     Recibe formData y lo procesa en UsersPage
-//   selectedUser {object|null}  null = crear nuevo | objeto = editar existente
-// ─────────────────────────────────────────────────────────────────────────────
-
 import { useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 

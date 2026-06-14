@@ -1,11 +1,3 @@
-// src/pages/PerfilPage.jsx
-// ─────────────────────────────────────────────────────────────────────────────
-// Página "Mi Perfil" — requerida por el Anexo Evaluación N°3.
-// Se reutiliza para los 3 roles (admin, coach, user).
-// Lee los datos directamente del localStorage guardados al hacer login,
-// por lo que no necesita una petición extra al backend.
-// ─────────────────────────────────────────────────────────────────────────────
-
 import React from "react";
 import { Card, Row, Col, Badge } from "react-bootstrap";
 import { getUser } from "../services/authService";

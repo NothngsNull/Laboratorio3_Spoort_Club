@@ -1,11 +1,3 @@
-// src/layouts/UserLayout.jsx
-// ─────────────────────────────────────────────────────────────────────────────
-// CAMBIOS según el Anexo Evaluación N°3:
-//   + Link "Mi Perfil" obligatorio en el header
-//   + Color principal diferenciado: AZUL (#0d6efd / #1a3a6e)
-//   + Badge "Usuario" en el header
-// ─────────────────────────────────────────────────────────────────────────────
-
 import React from "react";
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { Navbar, Container, Nav, Button } from "react-bootstrap";
