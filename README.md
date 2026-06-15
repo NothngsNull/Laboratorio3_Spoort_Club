@@ -38,7 +38,7 @@ Sistema de gestión deportiva construido con React + Vite, React Router, Bootstr
 
 ```bash
 # Instalar dependencias del frontend
-npm install
+pnpm install
 ```
 
 ---
@@ -46,7 +46,7 @@ npm install
 ## Cómo ejecutar el frontend
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 La aplicación estará disponible en: **http://localhost:5173**
@@ -70,34 +70,46 @@ El backend quedará disponible en: **http://localhost:3000**
 
 ```
 src/
+├── App.css
+├── App.jsx
+├── assets/
+│   ├── hero.png
+│   ├── react.svg
+│   └── vite.svg
 ├── components/
-│   ├── ProtectedRoute.jsx       # Bloquea rutas sin sesión
-│   ├── RoleRoute.jsx            # Bloquea rutas por rol
+│   ├── Navbar.jsx
+│   ├── ProtectedRoute.jsx
+│   ├── RoleRoute.jsx
+│   ├── sports/
+│   │   └── SportFormModal.jsx
 │   └── users/
-│       └── UserFormModal.jsx    # Modal crear/editar usuario
+│       └── UserFormModal.jsx
+├── index.css
 ├── layouts/
-│   ├── AdminLayout.jsx          # Layout morado — rol Administrador
-│   ├── CoachLayout.jsx          # Layout verde — rol Coach
-│   └── UserLayout.jsx           # Layout azul — rol Usuario
+│   ├── AdminLayout.jsx
+│   ├── CoachLayout.jsx
+│   └── UserLayout.jsx
+├── main.jsx
 ├── pages/
-│   ├── Home.jsx                 # Landing pública
-│   ├── Login.jsx                # Inicio de sesión
-│   ├── Register.jsx             # Registro de usuario
-│   ├── Unauthorized.jsx         # Acceso denegado
-│   ├── PerfilPage.jsx           # Mi Perfil (compartido entre roles)
+│   ├── Home.jsx
+│   ├── Login.jsx
+│   ├── PerfilPage.jsx
+│   ├── Register.jsx
+│   ├── Unauthorized.jsx
 │   ├── admin/
 │   │   ├── AdminDashboard.jsx
-│   │   └── UsersPage.jsx        # CRUD de usuarios
+│   │   ├── SportsPage.jsx
+│   │   └── UsersPage.jsx
 │   ├── coach/
 │   │   └── CoachDashboard.jsx
 │   └── user/
 │       └── UserDashboard.jsx
 ├── routes/
-│   └── AppRoutes.jsx            # Definición de todas las rutas
+│   └── AppRoutes.jsx
 └── services/
-    ├── authService.js           # Login, registro, sesión, helpers
-    └── userService.js           # CRUD usuarios (getUsers, createUser, etc.)
-```
+    ├── authService.js
+    ├── sportService.js
+    └── userService.js"
 
 ---
 

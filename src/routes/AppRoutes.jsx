@@ -1,3 +1,4 @@
+// src/routes/AppRoutes.jsx
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -13,9 +14,10 @@ import CoachDashboard from "../pages/coach/CoachDashboard.jsx";
 import AdminDashboard from "../pages/admin/AdminDashboard.jsx";
 
 // ── Módulos Admin ─────────────────────────────────────────────────────────────
-import UsersPage from "../pages/admin/UsersPage.jsx";
+import UsersPage  from "../pages/admin/UsersPage.jsx";
+import SportsPage from "../pages/admin/SportsPage.jsx";   
 
-// ── Perfil (compartido entre roles, muestra datos de la sesión activa) ────────
+// ── Perfil (compartido entre roles) ───────────────────────────────────────────
 import PerfilPage from "../pages/PerfilPage.jsx";
 
 // ── Layouts ───────────────────────────────────────────────────────────────────
@@ -75,6 +77,7 @@ function AppRoutes() {
         >
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="users"     element={<UsersPage />} />
+          <Route path="sports"    element={<SportsPage />} />   {/* ← NUEVO */}
           <Route path="perfil"    element={<PerfilPage />} />
         </Route>
 

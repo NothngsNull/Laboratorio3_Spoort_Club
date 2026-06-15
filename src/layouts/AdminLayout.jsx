@@ -1,6 +1,7 @@
+// src/layouts/AdminLayout.jsx
 import React from "react";
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
-import { Navbar, Container, Nav, Button, NavDropdown } from "react-bootstrap";
+import { Navbar, Container, Nav, Button } from "react-bootstrap";
 import { logout, getUser } from "../services/authService";
 
 function AdminLayout() {
@@ -22,7 +23,7 @@ function AdminLayout() {
   return (
     <div className="min-vh-100 d-flex flex-column" style={{ background: "#f4f0ff" }}>
 
-      {/* ── Navbar MORADO (color Admin según anexo) ─────────────────── */}
+      {/* ── Navbar MORADO (color Admin según evaluación) ─────────────────── */}
       <Navbar
         style={{ background: "linear-gradient(90deg, #2E1A47, #4a2d6e)" }}
         variant="dark"
@@ -47,16 +48,41 @@ function AdminLayout() {
           <Navbar.Collapse id="admin-nav" className="justify-content-end">
             <Nav className="align-items-center gap-2">
 
-              <Nav.Link as={Link} to="/admin/dashboard" className="text-white fw-semibold" style={linkActivo("/admin/dashboard")}>
+              <Nav.Link
+                as={Link}
+                to="/admin/dashboard"
+                className="text-white fw-semibold"
+                style={linkActivo("/admin/dashboard")}
+              >
                 Panel Central
               </Nav.Link>
 
-              <Nav.Link as={Link} to="/admin/users" className="text-white fw-semibold" style={linkActivo("/admin/users")}>
+              <Nav.Link
+                as={Link}
+                to="/admin/users"
+                className="text-white fw-semibold"
+                style={linkActivo("/admin/users")}
+              >
                 Usuarios
               </Nav.Link>
 
-              {/* ── Mi Perfil (OBLIGATORIO según anexo) ─────────────── */}
-              <Nav.Link as={Link} to="/admin/perfil" className="text-white fw-semibold" style={linkActivo("/admin/perfil")}>
+              {/* ── Módulo Deportes (NUEVO) ──────────────────────────────── */}
+              <Nav.Link
+                as={Link}
+                to="/admin/sports"
+                className="text-white fw-semibold"
+                style={linkActivo("/admin/sports")}
+              >
+                Deportes
+              </Nav.Link>
+
+              {/* Mi Perfil */}
+              <Nav.Link
+                as={Link}
+                to="/admin/perfil"
+                className="text-white fw-semibold"
+                style={linkActivo("/admin/perfil")}
+              >
                 Mi Perfil
               </Nav.Link>
 
@@ -72,17 +98,12 @@ function AdminLayout() {
                 onClick={handleLogout}
                 size="sm"
                 style={{
-                  background: "transparent",
-                  border: "2px solid #F2B705",
-                  color: "#F2B705",
+                  background: "#F2B705",
+                  border: "none",
+                  color: "#2E1A47",
                   fontWeight: 700,
                   fontSize: "13px",
-                  borderRadius: "8px",
-                  padding: "5px 16px",
-                  transition: "all .2s",
                 }}
-                onMouseEnter={e => { e.currentTarget.style.background = "#F2B705"; e.currentTarget.style.color = "#2E1A47"; }}
-                onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#F2B705"; }}
               >
                 Cerrar Sesión
               </Button>
@@ -92,20 +113,10 @@ function AdminLayout() {
         </Container>
       </Navbar>
 
-      {/* ── Contenido ──────────────────────────────────────────────────── */}
-      <main className="flex-grow-1 p-4">
-        <Container>
-          <Outlet />
-        </Container>
+      {/* ── Contenido de la ruta hija ──────────────────────────────────────── */}
+      <main className="flex-grow-1">
+        <Outlet />
       </main>
-
-      {/* ── Footer simple ───────────────────────────────────────────────── */}
-      <footer
-        className="text-center py-2"
-        style={{ background: "#2E1A47", color: "rgba(255,255,255,0.4)", fontSize: "12px" }}
-      >
-        SportClub © 2026 — Panel Administrador
-      </footer>
 
     </div>
   );
