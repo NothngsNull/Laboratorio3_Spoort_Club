@@ -134,3 +134,64 @@ src/
 - ✅ CRUD de usuarios (listar, crear, editar, eliminar con SweetAlert2)
 - ✅ Mi Perfil disponible para los 3 roles
 - ✅ Cierre de sesión funcional
+---
+
+## problema a solucionado.
+
+Anteriormente daba error el pnpm install y se debia al archivo pnpm-workspace.yaml.
+Se debia a la linea numero 3, simplemente cambie a (sqlite3:set this true or false) por (sqlite3: true)
+
+A pesar de esto el pnpm run dev seguia dando problemas asi que remplace el archivo package.json de esto:
+
+{
+  "name": "backend-api-frontend-users",
+  "version": "1.0.0",
+  "description": "Backend base con Express, JWT y Sequelize para apoyar actividades de Front End.",
+  "main": "src/server.js",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "mysql2": "^3.15.2",
+    "sequelize": "^6.37.7",
+    "sqlite3": "^6.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
+
+a esto:
+
+{
+  "name": "sportclub-frontend",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.0",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.10.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.0",
+    "sweetalert2": "^11.10.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "vite": "^5.1.0"
+  }
+}
+
