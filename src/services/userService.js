@@ -1,4 +1,3 @@
-
 const API_URL = "http://localhost:3000/api/users";
 
 /** Lee el token que authService.js guardó en localStorage */
@@ -39,6 +38,11 @@ export async function getUsers() {
   if (Array.isArray(json.data)) return json.data;
   if (Array.isArray(json.users)) return json.users;
   return [];
+}
+
+export async function getCoaches() {
+  const users = await getUsers();
+  return users.filter((u) => u.role === "coach");
 }
 
 // ── POST /api/users ───────────────────────────────────────────────────────────

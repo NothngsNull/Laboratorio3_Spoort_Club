@@ -71,6 +71,54 @@ export async function registerUser(name, email, password, opciones = {}) {
   return data;
 }
 
+// ── ACTUALIZAR PERFIL ──────────────────────────────────────────────────────────
+/**
+ * PUT /api/auth/me — actualiza nombre, email, birth_date, metadata.
+ * Requiere token. No permite cambiar rol ni contraseña.
+ */
+export async function updateProfile(data) {
+  const response = await fetch(`${API_URL}/me`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
+    },
+    body: JSON.stringify(data),
+  });
+
+  const json = await response.json();
+
+  if (!response.ok) {
+    throw new Error(json.message || "Error al actualizar el perfil.");
+  }
+
+  return json;
+}
+
+// ── CAMBIAR CONTRASEÑA ────────────────────────────────────────────────────────
+/**
+ * PUT /api/auth/me/password — cambia la contraseña del usuario autenticado.
+ * Body: { current_password, new_password, confirm_password }
+ */
+export async function changePassword(data) {
+  const response = await fetch(`${API_URL}/me/password`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
+    },
+    body: JSON.stringify(data),
+  });
+
+  const json = await response.json();
+
+  if (!response.ok) {
+    throw new Error(json.message || "Error al cambiar la contraseña.");
+  }
+
+  return json;
+}
+
 // ── SESIÓN ────────────────────────────────────────────────────────────────────
 
 /** Guarda token y usuario en localStorage. */

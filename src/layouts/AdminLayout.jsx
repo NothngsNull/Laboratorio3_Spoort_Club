@@ -66,7 +66,7 @@ function AdminLayout() {
                 Usuarios
               </Nav.Link>
 
-              {/* ── Módulo Deportes (NUEVO) ──────────────────────────────── */}
+              {/* ── Módulo Deportes ──────────────────────────────────── */}
               <Nav.Link
                 as={Link}
                 to="/admin/sports"
@@ -74,6 +74,26 @@ function AdminLayout() {
                 style={linkActivo("/admin/sports")}
               >
                 Deportes
+              </Nav.Link>
+
+              {/* ── Módulo Salas ────────────────────────────────────── */}
+              <Nav.Link
+                as={Link}
+                to="/admin/rooms"
+                className="text-white fw-semibold"
+                style={linkActivo("/admin/rooms")}
+              >
+                Salas
+              </Nav.Link>
+
+              {/* ── Módulo Clases ───────────────────────────────────── */}
+              <Nav.Link
+                as={Link}
+                to="/admin/classes"
+                className="text-white fw-semibold"
+                style={linkActivo("/admin/classes")}
+              >
+                Clases
               </Nav.Link>
 
               {/* Mi Perfil */}
