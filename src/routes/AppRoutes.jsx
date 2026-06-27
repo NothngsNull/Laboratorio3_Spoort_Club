@@ -14,8 +14,10 @@ import CoachDashboard from "../pages/coach/CoachDashboard.jsx";
 import AdminDashboard from "../pages/admin/AdminDashboard.jsx";
 
 // ── Módulos Admin ─────────────────────────────────────────────────────────────
-import UsersPage  from "../pages/admin/UsersPage.jsx";
-import SportsPage from "../pages/admin/SportsPage.jsx";   
+import UsersPage   from "../pages/admin/UsersPage.jsx";
+import SportsPage  from "../pages/admin/SportsPage.jsx";
+import RoomsPage   from "../pages/admin/RoomsPage.jsx";
+import ClassesPage from "../pages/admin/ClassesPage.jsx";   
 
 // ── Perfil (compartido entre roles) ───────────────────────────────────────────
 import PerfilPage from "../pages/PerfilPage.jsx";
@@ -77,7 +79,9 @@ function AppRoutes() {
         >
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="users"     element={<UsersPage />} />
-          <Route path="sports"    element={<SportsPage />} />   {/* ← NUEVO */}
+          <Route path="sports"    element={<SportsPage />} />
+          <Route path="rooms"     element={<RoomsPage />} />
+          <Route path="classes"   element={<ClassesPage />} />
           <Route path="perfil"    element={<PerfilPage />} />
         </Route>
 

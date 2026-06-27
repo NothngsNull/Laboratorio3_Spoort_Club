@@ -1,6 +1,6 @@
 // src/services/sportService.js
 
-const API_URL = "http://localhost:3000/api/sport";
+const API_URL = "http://localhost:3000/api/sports";
 
 /** Lee el token guardado por authService.js */
 function getToken() {
