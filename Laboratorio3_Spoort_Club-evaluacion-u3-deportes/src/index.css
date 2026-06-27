@@ -1,0 +1,65 @@
+:root {
+  --color-principal: #2E1A47;
+  --color-acento: #F2B705;
+  --color-principal-oscuro: #1a0f2e;
+  --color-acento-hover: #d9a404;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: #f8f9fa;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Clases corporativas */
+.bg-corporate {
+  background-color: var(--color-principal) !important;
+}
+.bg-corporate-dark {
+  background-color: var(--color-principal-oscuro) !important;
+}
+.text-corporate-accent {
+  color: var(--color-acento) !important;
+}
+.btn-corporate-solid {
+  background-color: #F2B705 !important;
+  color: #2E1A47 !important;
+  border: none !important;
+  font-weight: 700 !important;
+}
+.btn-corporate-solid:hover {
+  background-color: #d9a404 !important;
+  color: #2E1A47 !important;
+}
+.btn-corporate-outline {
+  background-color: transparent !important;
+  color: #fff !important;
+  border: 2px solid var(--color-acento) !important;
+  font-weight: 700 !important;
+  transition: all 0.3s ease;
+}
+.btn-corporate-outline:hover {
+  background-color: var(--color-acento) !important;
+  color: var(--color-principal) !important;
+}
+.hero-section {
+  background-image: linear-gradient(rgba(46, 26, 71, 0.9), rgba(46, 26, 71, 0.9)),
+    url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+}
+.custom-card {
+  border: none !important;
+  border-top: 5px solid var(--color-acento) !important;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+.custom-card:hover {
+  transform: translateY(-5px);
+}
